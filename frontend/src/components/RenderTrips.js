@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import MapGL, {
+import ReactMapGL, {
   Marker,
   Popup,
   NavigationControl,
@@ -10,6 +10,8 @@ import { withStyles } from "@material-ui/core/styles";
 import NProgress from "nprogress";
 import { getTrips } from "../services/tripService";
 import { toast } from "react-toastify";
+import CityPin from "./uber-mapbox-gl-utils/city-pin";
+import CityInfo from "./uber-mapbox-gl-utils/city-info";
 
 /**
  * @documentation Uber React Map GL documentation
@@ -23,15 +25,15 @@ const fullscreenControlStyle = {
   left: 0,
   padding: "10px"
 };
-//navstyles
+// navstyles
 const navStyle = {
   position: "absolute",
   top: 36,
   left: 0,
   padding: "10px"
 };
-
-export default class RenderTrips extends Component {
+const styles = {};
+class RenderTrips extends Component {
   constructor(props) {
     super(props);
 
@@ -43,8 +45,9 @@ export default class RenderTrips extends Component {
         longitude: 77.59828,
         zoom: 11
       },
+      requestedPair: "from", //two values from and to
       popupInfo: null,
-      trips: [],
+      trips: null,
       isFetching: false
     };
   }
@@ -54,22 +57,31 @@ export default class RenderTrips extends Component {
   };
 
   // Utility method to render the city marker
-  _renderCityMarker = (city, index) => {
+  _renderTripMarker = (trip, index) => {
+    const { requestedPair } = this.state;
+    let point = {};
+    if (requestedPair === "from") {
+      point.latitude = +trip.from_lat;
+      point.longitude = +trip.from_long;
+    } else if (requestedPair === "to") {
+      point.latitude = +trip.to_lat;
+      point.longitude = +trip.to_long;
+    }
     return (
       <Marker
         key={`marker-${index}`}
-        longitude={city.longitude}
-        latitude={city.latitude}
+        longitude={point.longitude}
+        latitude={point.latitude}
         captureClick={true}
       >
         <CityPin
           size={20}
           onClick={() => {
             const { viewport } = this.state;
-            viewport.latitude = city.latitude;
-            viewport.longitude = city.longitude;
+            viewport.latitude = point.latitude;
+            viewport.longitude = point.longitude;
             viewport.zoom = 13;
-            this.setState({ viewport, popupInfo: city });
+            this.setState({ viewport, popupInfo: point });
           }}
         />
       </Marker>
@@ -97,28 +109,20 @@ export default class RenderTrips extends Component {
   async componentDidMount() {
     // console.log(trips);
     NProgress.start();
-    this.setState({ isFetching: true });
     try {
       const {
         data: { trips, message }
       } = await getTrips();
       NProgress.done();
-      this.setState({ trips: trips, isFetching: false });
+      this.setState({ trips: trips });
       toast.success(message);
     } catch (ex) {
-      this.setState({ isFetching: false });
       NProgress.done();
       toast.error(ex);
     }
   }
   render() {
     const { trips } = this.state;
-    const markers =
-      trips.length > 0 ? (
-        trips.map(this._renderCityMarker)
-      ) : (
-        <span>Network request still in process</span>
-      );
     return (
       <Grid
         container
@@ -130,16 +134,20 @@ export default class RenderTrips extends Component {
       >
         <Grid xs={2}>{/* offset */}</Grid>
 
-        <Grid width={10} item xs={8}>
+        <Grid item xs={8}>
           <div>
-            <MapGL
+            <ReactMapGL
               mapboxApiAccessToken="pk.eyJ1IjoicHJhdGVlazk1MSIsImEiOiJjanU4bTZldzQxenpzNDN0YWFlemxmZTR1In0.39lHGz_hKdlKhM-ONRcDpg"
               {...this.state.viewport}
               mapStyle="mapbox://styles/mapbox/dark-v9"
               onViewportChange={this._updateViewport}
             >
               {/* Here goes the markers for the trips that we have */}
-              {markers}
+              {trips ? (
+                trips.map(this._renderTripMarker)
+              ) : (
+                <span>Network request still in process</span>
+              )}
               {this._renderPopup}
               <div className="fullscreen" style={fullscreenControlStyle}>
                 <FullscreenControl />
@@ -147,11 +155,7 @@ export default class RenderTrips extends Component {
               <div className="nav" style={navStyle}>
                 <NavigationControl onViewportChange={this._updateViewport} />
               </div>
-
-              <ControlPanel
-                containerComponent={this.props.containerComponent}
-              />
-            </MapGL>
+            </ReactMapGL>
           </div>
         </Grid>
         <Grid xs={2}>{/* offset */}</Grid>
@@ -159,3 +163,5 @@ export default class RenderTrips extends Component {
     );
   }
 }
+
+export default withStyles(styles)(RenderTrips);
