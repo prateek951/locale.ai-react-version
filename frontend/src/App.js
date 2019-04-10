@@ -10,8 +10,8 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/" component={ReactDropzone} />
-          <Route path="/render-trips" component={RenderTrips} />
+          <Route path="/" exact component={ReactDropzone} />
+          <Route path="/render-trips" exact component={RenderTrips} />
         </Switch>
         <ToastContainer />
       </Router>
