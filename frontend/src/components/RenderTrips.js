@@ -1,3 +1,8 @@
+/**
+ * @documentation Uber React Map GL documentation
+ * For more information refer there.
+ * https://uber.github.io/react-map-gl
+ *  */
 import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
 import ReactMapGL, {
@@ -13,10 +18,6 @@ import { toast } from "react-toastify";
 import CityPin from "./uber-mapbox-gl-utils/city-pin";
 import CityInfo from "./uber-mapbox-gl-utils/city-info";
 
-/**
- * @documentation Uber React Map GL documentation
- * For more information refer there.
- *  */
 
 // Full screen control styles
 const fullscreenControlStyle = {
@@ -48,7 +49,6 @@ class RenderTrips extends Component {
       requestedPair: "from", //two values from and to
       popupInfo: null,
       trips: null,
-      isFetching: false
     };
   }
   // Utility method to update the viewport
