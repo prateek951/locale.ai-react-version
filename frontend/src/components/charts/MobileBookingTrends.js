@@ -18,6 +18,7 @@ class MobileBookingTrends extends Component {
     } = await bookingTrends();
     // console.log(models);
     this.setState({ trends: mbtrends });
+    console.log(mbtrends);
   }
 
   render() {
@@ -38,19 +39,12 @@ class MobileBookingTrends extends Component {
           <MDBCol>
             <MDBJumbotron>
               <div>
-                <h2 className="h1 display-3">Hello, world!</h2>
+                <h2 className="h1 display-3">Booking Trends</h2>
                 <p className="lead">
-                  This is a simple hero unit, a simple Jumbotron-style component
-                  for calling extra attention to featured content or
-                  information.
-                </p>
-                <hr className="my-2" />
-                <p>
-                  It uses utility classes for typgraphy and spacing to space
-                  content out within the larger container.
-                </p>
-                <p className="lead">
-                  <MDBBtn color="primary">Learn More</MDBBtn>
+                  On analysis of the dataset of the trips, it can be well
+                  observed that around {trends[0]}% of the trips that were booked were having
+                   <code> online_bookings</code> and {trends[1]}% of the trips 
+                  that were booked were having <code>mobile_site_bookings</code>
                 </p>
               </div>
             </MDBJumbotron>

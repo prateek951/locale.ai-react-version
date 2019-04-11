@@ -44,19 +44,18 @@ class MostlyPreferredVehicleModels extends Component {
           <MDBCol>
             <MDBJumbotron>
               <div>
-                            <h2 className="h1 display-3">Hello, world!</h2>
-                            <p className="lead">
-                                This is a simple hero unit, a simple Jumbotron-style component
-                                for calling extra attention to featured content or information.
-              </p>
-                            <hr className="my-2" />
-                            <p>
-                                It uses utility classes for typgraphy and spacing to space
-                                content out within the larger container.
-              </p>
-                            <p className="lead">
-                                <MDBBtn color="primary">Learn More</MDBBtn>
-                            </p>
+                <h2 className="h1 display-3">
+                  Most Preferred Vehicle Model IDs
+                </h2>
+                <p className="lead">
+                  On analyzing the dataset of trips it can be seen the most
+                  prominently preferred vehicles were of model 12 with around
+                  30,000 trips being carried out in the vehicles that had this
+                  as the <code> vehicle_model_id</code> . I just considered a
+                  slice of dataset here, giving us directly the vehicle model
+                  that we should target. 
+                </p>
+                <hr className="my-2" />
               </div>
             </MDBJumbotron>
           </MDBCol>
