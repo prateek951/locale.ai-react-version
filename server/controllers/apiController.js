@@ -42,26 +42,22 @@ exports.getTrips = (req, res) => {
     .pipe(csv())
     .on("data", function(data) {
       console.log(data);
-      trips.push(data);
+      if (
+        isFinite(+data.from_lat) &&
+        isFinite(+data.from_long) &&
+        isFinite(+data.to_lat) &&
+        isFinite(+data.to_long)
+      ) {
+        trips.push({
+          from_lat: +data.from_lat,
+          from_long: +data.from_long,
+          to_lat: +data.to_lat,
+          to_long: +data.to_long
+        });
+      }
     })
     .on("end", function() {
       trips = trips && trips.length > 0 ? trips.slice(1, trips.length) : [];
-      trips = trips
-        .map(trip => {
-          return {
-            from_lat: trip.from_lat,
-            from_long: trip.from_long,
-            to_lat: trip.to_lat,
-            to_long: trip.to_long
-          };
-        })
-        .filter(
-          trip =>
-            !isNaN(+trip.from_lat) &&
-            !isNaN(+trip.from_long) &&
-            !isNaN(+trip.to_lat) &&
-            !isNaN(+trip.to_long)
-        );
       return res
         .status(HTTP_STATUS_CODES.OK)
         .json({ trips: trips, message: "Rendering all the trips" });
