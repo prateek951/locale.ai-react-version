@@ -1,27 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {  VictoryBar, VictoryChart } from "victory";
-import { Grid, Paper } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { MDBContainer, MDBRow, MDBCol, MDBJumbotron, MDBBtn } from "mdbreact";
+import { VictoryBar, VictoryChart } from "victory";
 import { mostPreferredVehicles } from "../../services/tripService";
 
-const styles = theme => ({
-  paper: {
-    padding: theme.spacing.unit * 2,
-    maxWidth: 400,
-    textAlign: "center"
-  }
-});
-
-var cardStyle2 = {
-  display: "block",
-  width: "500px",
-};
-var cardStyle = {
-  display: "block",
-  width: "500px",
-  fontSize: "24px",
-};
 class MostlyPreferredVehicleModels extends Component {
   constructor(props) {
     super(props);
@@ -40,18 +22,10 @@ class MostlyPreferredVehicleModels extends Component {
 
   render() {
     const { models } = this.state;
-    const { classes } = this.props;
     return (
-      <Grid
-        container
-        spacing={24}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: "80vh" }}
-      >
-        <Grid item xs={12} sm={6}>
-          <Paper style={cardStyle} className={classes.paper}>
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol>
             <VictoryChart minDomain={{ x: 0 }}>
               <VictoryBar
                 data={Object.keys(models)
@@ -64,20 +38,32 @@ class MostlyPreferredVehicleModels extends Component {
                   })}
               />
             </VictoryChart>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper style={cardStyle2} className={classes.paper}>
-            Hi Sucker
-          </Paper>
-        </Grid>
-      </Grid>
+          </MDBCol>
+        </MDBRow>
+        <MDBRow>
+          <MDBCol>
+            <MDBJumbotron>
+              <div>
+                            <h2 className="h1 display-3">Hello, world!</h2>
+                            <p className="lead">
+                                This is a simple hero unit, a simple Jumbotron-style component
+                                for calling extra attention to featured content or information.
+              </p>
+                            <hr className="my-2" />
+                            <p>
+                                It uses utility classes for typgraphy and spacing to space
+                                content out within the larger container.
+              </p>
+                            <p className="lead">
+                                <MDBBtn color="primary">Learn More</MDBBtn>
+                            </p>
+              </div>
+            </MDBJumbotron>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
     );
   }
 }
 
-MostlyPreferredVehicleModels.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(MostlyPreferredVehicleModels);
+export default MostlyPreferredVehicleModels;
