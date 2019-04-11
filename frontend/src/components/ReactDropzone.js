@@ -58,13 +58,26 @@ class ReactDropzone extends React.Component {
             <span role="img" aria-labelledBy="Location App">
               📍
             </span>{" "}
-            Location Visualizer
+            Location Visualizer.
           </h2>
           <hr />
           <h4>
-            The app does what it says...Let's upload a csv to carry out our
-            analysis
+            The app does what it says...Let us upload a csv to carry out our
+            analysis.
           </h4>
+          <p>
+            {" "}
+            Location intelligence (LI) is a business intelligence (BI) tool
+            capability that relates geographic contexts to business data. Like
+            BI, location intelligence software is designed to turn data into
+            insight for a host of business purposes. Such tools draw on a
+            variety of data sources, such as geographic information systems
+            (GIS), aerial maps, demographic information and, in some cases, an
+            organization own databases. For effective decision making and
+            helping companies exploit this location factor which they are unable
+            to tap and utilize the fruits of what it can offer in terms of the
+            growth and stability of the organisations.
+          </p>
           <hr />
           <br />
 
@@ -103,17 +116,15 @@ class ReactDropzone extends React.Component {
               <MDBListGroup style={{ width: "22rem" }}>
                 {this.state.files.map((file, index) => {
                   return (
-                    <MDBListGroupItem key={index}>
-                      {file.name}
-                    </MDBListGroupItem>
+                    <MDBListGroupItem key={index}>{file.name}</MDBListGroupItem>
                   );
                 })}
               </MDBListGroup>
               {this.state.isUploaded ? (
                 <Link to="/render-trips">Visualize the Results</Link>
               ) : (
-                  ""
-                )}
+                ""
+              )}
             </MDBCol>
           </MDBRow>
         </MDBJumbotron>
