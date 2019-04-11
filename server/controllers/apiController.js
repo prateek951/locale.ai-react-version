@@ -91,11 +91,37 @@ exports.bookingTrends = (req, res) => {
       );
       // console.log(bookingTrends.mobileBookings, bookingTrends.onlineBookings);
       console.log("done danna done");
-      return res
-        .status(HTTP_STATUS_CODES.OK)
-        .json({
-          mbtrends: [onlineBookingPercentage, mobileBookingPercentage],
-          message: "Pie chart creation begins"
-        });
+      return res.status(HTTP_STATUS_CODES.OK).json({
+        mbtrends: [onlineBookingPercentage, mobileBookingPercentage],
+        message: "Pie chart creation begins"
+      });
+    });
+};
+
+exports.vehicleModels = (req, res) => {
+  // compute these on the server side with the data that we have
+  let vehicleModelsWithCounts;
+  let vehicleModels = [];
+  fs.createReadStream(path.join(__dirname, "../uploads/trips.csv"))
+    .pipe(csv())
+    .on("data", function(data) {
+      // trips.push(data);
+      vehicleModels.push(data.vehicle_model_id);
+    })
+    .on("end", function() {
+      vehicleModelsWithCounts = vehicleModels.reduce(function(tally, vm) {
+        if (typeof tally[vm] === "undefined") {
+          tally[vm] = 1;
+        } else {
+          tally[vm] += 1;
+        }
+        return tally;
+      }, {});
+
+      console.log("done danna done");
+      return res.status(HTTP_STATUS_CODES.OK).json({
+        models: vehicleModelsWithCounts,
+        message: "Trends for Vehicle Models"
+      });
     });
 };

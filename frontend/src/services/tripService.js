@@ -4,7 +4,11 @@ import config from "../config.json";
 // Let us create the end point that we want to expose
 const MAP_END_POINT = `${config.endpoint}/basic-map`;
 const DATASET_UPLOAD_END_POINT = `${config.endpoint}/upload`;
-const BOOKING_TRENDS_END_POINT = `${config.endpoint}/booking-trends`
+const BOOKING_TRENDS_END_POINT = `${config.endpoint}/booking-trends`;
+const MOST_PREFERRED_VEHICLES_END_POINT = `${
+  config.endpoint
+}/most-preferred-vehicles`;
+
 // setters for exposing end points
 function MapEndPoint() {
   return `${MAP_END_POINT}`;
@@ -15,6 +19,9 @@ function DataSetUploadEndPoint() {
 
 function BookingTrendsEndPoint() {
   return `${BOOKING_TRENDS_END_POINT}`;
+}
+function MostPreferredVehiclesEndPoint() {
+  return `${MOST_PREFERRED_VEHICLES_END_POINT}`;
 }
 
 /**
@@ -40,4 +47,8 @@ export function getTrips() {
 
 export function bookingTrends() {
   return http.get(BookingTrendsEndPoint());
+}
+
+export function mostPreferredVehicles() {
+  return http.get(MostPreferredVehiclesEndPoint());
 }

@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import MobileBookingTrends from "./charts/MobileBookingTrends";
 import { bookingTrends } from "../services/tripService";
 export default class ChartVisualization extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       //   data for mobile site and online bookings for render purposes
       trends: []
@@ -27,15 +25,9 @@ export default class ChartVisualization extends Component {
 
   render() {
     return (
-      <Tabs>
-        <TabList>
-          <Tab>Mobile Versus Online Booking Trends</Tab>
-        </TabList>
-
-        <TabPanel>
+        <div>
           <MobileBookingTrends trends={this.state.trends} />
-        </TabPanel>
-      </Tabs>
+        </div>
     );
   }
 }
