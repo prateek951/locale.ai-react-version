@@ -1,6 +1,7 @@
 const routes = {
   uploadRoute: "/upload",
-  mapRoute: "/basic-map"
+  mapRoute: "/basic-map",
+  bookingTrendsRoute: '/booking-trends'
 };
 
 module.exports = routes;

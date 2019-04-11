@@ -67,3 +67,35 @@ exports.getTrips = (req, res) => {
         .json({ trips: trips, message: "Rendering all the trips" });
     });
 };
+
+exports.bookingTrends = (req, res) => {
+  // compute these on the server side with the data that we have
+  let bookingTrends = { mobileBookings: 0, onlineBookings: 0 };
+  let onlineBookingPercentage = 0;
+  let mobileBookingPercentage = 0;
+  fs.createReadStream(path.join(__dirname, "../uploads/trips.csv"))
+    .pipe(csv())
+    .on("data", function(data) {
+      // trips.push(data);
+      bookingTrends.mobileBookings += Number(data.mobile_site_booking);
+      bookingTrends.onlineBookings += Number(data.online_booking);
+    })
+    .on("end", function() {
+      onlineBookingPercentage = Number(
+        bookingTrends.onlineBookings /
+          (bookingTrends.onlineBookings + bookingTrends.mobileBookings)
+      );
+      mobileBookingPercentage = Number(
+        bookingTrends.mobileBookings /
+          (bookingTrends.onlineBookings + bookingTrends.mobileBookings)
+      );
+      // console.log(bookingTrends.mobileBookings, bookingTrends.onlineBookings);
+      console.log("done danna done");
+      return res
+        .status(HTTP_STATUS_CODES.OK)
+        .json({
+          mbtrends: [onlineBookingPercentage, mobileBookingPercentage],
+          message: "Pie chart creation begins"
+        });
+    });
+};

@@ -54,6 +54,7 @@ const routes = require("./utils/routeHandlers");
 
 app.post(routes.uploadRoute, upload.single("file"), apiController.makeUpload);
 app.get(routes.mapRoute, apiController.getTrips);
+app.get(routes.bookingTrendsRoute, apiController.bookingTrends);
 
 app.use((err, req, res, next) => {
   // If the error code is for the LIMITED FILE TYPES ( ALLOW ONLY CSV)

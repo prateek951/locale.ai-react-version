@@ -4,13 +4,17 @@ import config from "../config.json";
 // Let us create the end point that we want to expose
 const MAP_END_POINT = `${config.endpoint}/basic-map`;
 const DATASET_UPLOAD_END_POINT = `${config.endpoint}/upload`;
-
+const BOOKING_TRENDS_END_POINT = `${config.endpoint}/booking-trends`
 // setters for exposing end points
 function MapEndPoint() {
   return `${MAP_END_POINT}`;
 }
 function DataSetUploadEndPoint() {
   return `${DATASET_UPLOAD_END_POINT}`;
+}
+
+function BookingTrendsEndPoint() {
+  return `${BOOKING_TRENDS_END_POINT}`;
 }
 
 /**
@@ -30,6 +34,10 @@ export function uploadCSV(file) {
   return http.post(DataSetUploadEndPoint(), formData, config);
 }
 
-export function getTrips() { 
+export function getTrips() {
   return http.get(MapEndPoint());
+}
+
+export function bookingTrends() {
+  return http.get(BookingTrendsEndPoint());
 }

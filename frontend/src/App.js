@@ -5,6 +5,8 @@ import ReactDropzone from "./components/ReactDropzone";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RenderTrips from "./components/RenderTrips";
+import ChartVisualization from "./components/ChartVisualization";
+
 class App extends Component {
   render() {
     return (
@@ -12,6 +14,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={ReactDropzone} />
           <Route path="/render-trips" exact component={RenderTrips} />
+          <Route path="/visualize" component={ChartVisualization} />
         </Switch>
         <ToastContainer />
       </Router>
