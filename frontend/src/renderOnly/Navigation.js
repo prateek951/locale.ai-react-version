@@ -26,7 +26,7 @@ const Logo = styled.h1`
 // styled component styles for the navigation bar 
 const StyledNavbar = styled.header`
   .bar {
-    border-bottom: 10px solid ${props => props.theme.black};
+    border-bottom: 10px solid black;
     display: grid;
     grid-template-columns: auto 1fr;
     justify-content: space-between;
