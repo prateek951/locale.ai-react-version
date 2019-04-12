@@ -1,10 +1,18 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import NProgress from "nprogress";
 import PropTypes from "prop-types";
-import { MDBContainer, MDBRow, MDBCol, MDBJumbotron, MDBBtn } from "mdbreact";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBJumbotron,
+  MDBBtn,
+  toast
+} from "mdbreact";
 import { VictoryBar, VictoryChart } from "victory";
 import { mostPreferredVehicles } from "../../services/tripService";
 
-class MostlyPreferredVehicleModels extends Component {
+class MostlyPreferredVehicleModels extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,11 +21,19 @@ class MostlyPreferredVehicleModels extends Component {
     };
   }
   async componentDidMount() {
-    const {
-      data: { models, message }
-    } = await mostPreferredVehicles();
-    // console.log(models);
-    this.setState({ models: models });
+    NProgress.start();
+    try {
+      const {
+        data: { models, message }
+      } = await mostPreferredVehicles();
+      // console.log(models);
+      this.setState({ models: models });
+      NProgress.done();
+      toast.success(message);
+    } catch (ex) {
+      NProgress.done();
+      toast.error(ex);
+    }
   }
 
   render() {
@@ -53,7 +69,7 @@ class MostlyPreferredVehicleModels extends Component {
                   30,000 trips being carried out in the vehicles that had this
                   as the <code> vehicle_model_id</code> . I just considered a
                   slice of dataset here, giving us directly the vehicle model
-                  that we should target. 
+                  that we should target.
                 </p>
                 <hr className="my-2" />
               </div>

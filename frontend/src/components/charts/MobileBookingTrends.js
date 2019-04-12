@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { MDBContainer, MDBRow, MDBCol, MDBJumbotron, MDBBtn } from "mdbreact";
+import NProgress from "nprogress";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBJumbotron,
+  MDBBtn,
+  toast
+} from "mdbreact";
 import { bookingTrends } from "../../services/tripService";
 import { VictoryPie } from "victory";
 
@@ -13,14 +21,27 @@ class MobileBookingTrends extends Component {
     };
   }
   async componentDidMount() {
-    const {
-      data: { mbtrends, message }
-    } = await bookingTrends();
-    // console.log(models);
-    this.setState({ trends: mbtrends });
-    console.log(mbtrends);
+    NProgress.start();
+    try {
+      const {
+        data: { mbtrends, message }
+      } = await bookingTrends();
+      // console.log(models);
+      this.setState({ trends: mbtrends });
+      NProgress.done();
+      toast.success(message);
+      console.log(mbtrends);
+    } catch (ex) {
+      NProgress.done();
+      toast.error(ex);
+    }
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.trends !== nextState.trends) {
+      return true;
+    }
+    return false;
+  }
   render() {
     const { trends } = this.state;
     return (
@@ -42,8 +63,9 @@ class MobileBookingTrends extends Component {
                 <h2 className="h1 display-3">Booking Trends</h2>
                 <p className="lead">
                   On analysis of the dataset of the trips, it can be well
-                  observed that around {trends[0]}% of the trips that were booked were having
-                   <code> online_bookings</code> and {trends[1]}% of the trips 
+                  observed that around {trends[0]}% of the trips that were
+                  booked were having
+                  <code> online_bookings</code> and {trends[1]}% of the trips
                   that were booked were having <code>mobile_site_bookings</code>
                 </p>
               </div>

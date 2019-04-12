@@ -3,13 +3,15 @@
  * For more information refer there.
  * https://uber.github.io/react-map-gl
  *  */
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import ReactMapGL, {
   Marker,
   Popup,
   NavigationControl,
-  FullscreenControl
+  FullscreenControl,
+  FlyToInterpolator
 } from "react-map-gl";
 import { withStyles } from "@material-ui/core/styles";
 import NProgress from "nprogress";
@@ -17,7 +19,6 @@ import { getTrips } from "../services/tripService";
 import { toast } from "react-toastify";
 import CityPin from "./uber-mapbox-gl-utils/city-pin";
 import CityInfo from "./uber-mapbox-gl-utils/city-info";
-
 
 // Full screen control styles
 const fullscreenControlStyle = {
@@ -34,7 +35,7 @@ const navStyle = {
   padding: "10px"
 };
 const styles = {};
-class RenderTrips extends Component {
+class RenderTrips extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -44,11 +45,13 @@ class RenderTrips extends Component {
         height: 700,
         latitude: 12.99313,
         longitude: 77.59828,
-        zoom: 11
+        zoom: 11,
+        transitionInterpolator: new FlyToInterpolator()
       },
+      mapRendered: false,
       requestedPair: "from", //two values from and to
       popupInfo: null,
-      trips: null,
+      trips: null
     };
   }
   // Utility method to update the viewport
@@ -109,12 +112,13 @@ class RenderTrips extends Component {
   async componentDidMount() {
     // console.log(trips);
     NProgress.start();
+    this.setState({ isFetching: true });
     try {
       const {
         data: { trips, message }
       } = await getTrips();
+      this.setState({ trips: trips, mapRendered: true });
       NProgress.done();
-      this.setState({ trips: trips });
       toast.success(message);
     } catch (ex) {
       NProgress.done();
@@ -156,6 +160,13 @@ class RenderTrips extends Component {
                 <NavigationControl onViewportChange={this._updateViewport} />
               </div>
             </ReactMapGL>
+            <br/><br/>
+            {this.state.mapRendered && (
+              <div>
+                <Link to="/visualize">See the Basic Chart</Link>
+                <Link to="/prefer">See the Main Chart</Link>
+              </div>
+            )}
           </div>
         </Grid>
         <Grid xs={2}>{/* offset */}</Grid>

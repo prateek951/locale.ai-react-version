@@ -7,19 +7,37 @@ import "react-toastify/dist/ReactToastify.css";
 import RenderTrips from "./components/RenderTrips";
 import ChartVisualization from "./components/ChartVisualization";
 import MostPreferredVehicleModels from "./components/charts/MostPreferredVehicleModels";
-
+import Navigation from "./renderOnly/Navigation";
+import Footer from "./renderOnly/Footer";
+import MostlyPreferredVehicleModels from "./components/charts/MostPreferredVehicleModels";
 class App extends Component {
   render() {
     return (
-      <Router>
+      <div>
+        <Navigation />
         <Switch>
           <Route path="/" exact component={ReactDropzone} />
-          <Route path="/render-trips" exact component={RenderTrips} />
-          <Route path="/visualize" exact component={ChartVisualization} />
-          <Route path="/prefer" exact component={MostPreferredVehicleModels} />
+          <Route
+            path="/render-trips"
+            exact
+            render={props => (
+              <RenderTrips {...props} />
+            )}
+          />
+          <Route
+            path="/visualize"
+            exact
+            render={props => <ChartVisualization {...props}/>}
+          />
+          <Route
+            path="/prefer"
+            exact
+            render={props => <MostlyPreferredVehicleModels {...props} isMapRendered={this.state.isMapRendered} />}
+          />
+          <ToastContainer />
         </Switch>
-        <ToastContainer />
-      </Router>
+        <Footer />
+      </div>
     );
   }
 }

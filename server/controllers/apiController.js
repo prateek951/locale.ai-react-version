@@ -57,7 +57,8 @@ exports.getTrips = (req, res) => {
       }
     })
     .on("end", function() {
-      trips = trips && trips.length > 0 ? trips.slice(1, trips.length) : [];
+      trips =
+        trips && trips.length > 0 ? trips.slice(1, trips.length / 10) : [];
       return res
         .status(HTTP_STATUS_CODES.OK)
         .json({ trips: trips, message: "Rendering all the trips" });

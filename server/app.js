@@ -10,13 +10,15 @@ const multer = require("multer");
 const HTTP_STATUS_CODES = require("http-status-codes");
 const app = express();
 
-app.use(cors({
-  'allowedHeaders': ['sessionId', 'Content-Type'],
-  'exposedHeaders': ['sessionId'],
-  'origin': '*',
-  'methods': 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  'preflightContinue': false
-}));
+app.use(
+  cors({
+    allowedHeaders: ["sessionId", "Content-Type"],
+    exposedHeaders: ["sessionId"],
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false
+  })
+);
 
 // Only allow csv files to get uploaded and no other mimeTypes
 const fileFilter = function(req, file, cb) {
@@ -76,7 +78,9 @@ app.use((err, req, res, next) => {
 
 if (process.env.NODE_ENV === "development") {
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "public", "index.html"));
+    res.sendFile(
+      path.resolve(__dirname, "..", "frontend", "public", "index.html")
+    );
   });
 }
 

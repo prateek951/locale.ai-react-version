@@ -26,7 +26,7 @@ export default class ChartVisualization extends Component {
   render() {
     return (
         <div>
-          <MobileBookingTrends trends={this.state.trends} />
+          <MobileBookingTrends />
         </div>
     );
   }
