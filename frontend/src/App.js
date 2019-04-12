@@ -9,7 +9,6 @@ import ChartVisualization from "./components/ChartVisualization";
 import MostPreferredVehicleModels from "./components/charts/MostPreferredVehicleModels";
 import Navigation from "./renderOnly/Navigation";
 import Footer from "./renderOnly/Footer";
-import MostlyPreferredVehicleModels from "./components/charts/MostPreferredVehicleModels";
 class App extends Component {
   render() {
     return (
@@ -32,10 +31,10 @@ class App extends Component {
           <Route
             path="/prefer"
             exact
-            render={props => <MostlyPreferredVehicleModels {...props} />}
+            render={props => <MostPreferredVehicleModels {...props} />}
           />
-          <ToastContainer />
         </Switch>
+          <ToastContainer />
         <Footer />
       </div>
     );

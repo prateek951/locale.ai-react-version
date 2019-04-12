@@ -1,6 +1,5 @@
 import React, { PureComponent } from "react";
 import NProgress from "nprogress";
-import PropTypes from "prop-types";
 import {
   MDBContainer,
   MDBRow,
@@ -16,44 +15,51 @@ class MostlyPreferredVehicleModels extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      models: {}
+      models: {},
+      loading: false
       //   { vehiclemodel : countforthem}
     };
   }
   async componentDidMount() {
     NProgress.start();
+    this.setState({ loading: true });
     try {
       const {
         data: { models, message }
       } = await mostPreferredVehicles();
       // console.log(models);
-      this.setState({ models: models });
+      this.setState({ models: models, loading: false });
       NProgress.done();
       toast.success(message);
     } catch (ex) {
       NProgress.done();
+      this.setState({ loading: false });
       toast.error(ex);
     }
   }
 
   render() {
-    const { models } = this.state;
+    const { models, loading } = this.state;
     return (
       <MDBContainer>
         <MDBRow>
           <MDBCol>
-            <VictoryChart minDomain={{ x: 0 }}>
-              <VictoryBar
-                data={Object.keys(models)
-                  .slice(1, 10)
-                  .map(modelKey => {
-                    return {
-                      x: modelKey,
-                      y: models[modelKey]
-                    };
-                  })}
-              />
-            </VictoryChart>
+            {loading ? (
+              <h1>Loading...</h1>
+            ) : (
+              <VictoryChart minDomain={{ x: 0 }}>
+                <VictoryBar
+                  data={Object.keys(models)
+                    .slice(1, 10)
+                    .map(modelKey => {
+                      return {
+                        x: modelKey,
+                        y: models[modelKey]
+                      };
+                    })}
+                />
+              </VictoryChart>
+            )}
           </MDBCol>
         </MDBRow>
         <MDBRow>

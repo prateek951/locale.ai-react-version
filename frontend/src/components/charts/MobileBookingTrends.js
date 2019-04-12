@@ -22,17 +22,19 @@ class MobileBookingTrends extends Component {
   }
   async componentDidMount() {
     NProgress.start();
+    this.setState({ loading: true });
     try {
       const {
         data: { mbtrends, message }
       } = await bookingTrends();
       // console.log(models);
-      this.setState({ trends: mbtrends });
+      this.setState({ trends: mbtrends, loading: false });
       NProgress.done();
       toast.success(message);
       console.log(mbtrends);
     } catch (ex) {
       NProgress.done();
+      this.setState({ loading: false });
       toast.error(ex);
     }
   }

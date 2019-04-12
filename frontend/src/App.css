@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+#nprogress{
+  z-index: 999999;
+  background: red;
+}
