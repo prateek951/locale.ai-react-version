@@ -32,7 +32,7 @@ class App extends Component {
           <Route
             path="/prefer"
             exact
-            render={props => <MostlyPreferredVehicleModels {...props} isMapRendered={this.state.isMapRendered} />}
+            render={props => <MostlyPreferredVehicleModels {...props} />}
           />
           <ToastContainer />
         </Switch>
