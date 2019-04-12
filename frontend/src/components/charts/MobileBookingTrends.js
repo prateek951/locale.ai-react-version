@@ -16,7 +16,7 @@ class MobileBookingTrends extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      trends: []
+      trends: [],
       //   { vehiclemodel : countforthem}
     };
   }
@@ -38,25 +38,24 @@ class MobileBookingTrends extends Component {
       toast.error(ex);
     }
   }
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.trends !== nextState.trends) {
-      return true;
-    }
-    return false;
-  }
+
   render() {
-    const { trends } = this.state;
+    const { trends, loading } = this.state;
     return (
       <MDBContainer>
         <MDBRow>
-          <MDBCol>
-            <VictoryPie
-              data={[
-                { x: "Online Bookings", y: trends[0] },
-                { x: "Mobile Site Bookings", y: trends[1] }
-              ]}
-            />
-          </MDBCol>
+          {loading ? (
+            <h1>Rendering Booking Trends </h1>
+          ) : (
+            <MDBCol>
+              <VictoryPie
+                data={[
+                  { x: "Online Bookings", y: trends[0] },
+                  { x: "Mobile Site Bookings", y: trends[1] }
+                ]}
+              />
+            </MDBCol>
+          )}
         </MDBRow>
         <MDBRow>
           <MDBCol>

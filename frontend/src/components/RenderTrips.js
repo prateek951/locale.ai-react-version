@@ -4,7 +4,6 @@
  * https://uber.github.io/react-map-gl
  *  */
 import React, { PureComponent } from "react";
-import { Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import ReactMapGL, {
   Marker,
@@ -13,12 +12,12 @@ import ReactMapGL, {
   FullscreenControl,
   FlyToInterpolator
 } from "react-map-gl";
-import { withStyles } from "@material-ui/core/styles";
 import NProgress from "nprogress";
 import { getTrips } from "../services/tripService";
 import { toast } from "react-toastify";
 import CityPin from "./uber-mapbox-gl-utils/city-pin";
 import CityInfo from "./uber-mapbox-gl-utils/city-info";
+import ItemStyles from "../renderOnly/styles/ItemStyles";
 
 // Full screen control styles
 const fullscreenControlStyle = {
@@ -128,51 +127,40 @@ class RenderTrips extends PureComponent {
   render() {
     const { trips } = this.state;
     return (
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: "100vh" }}
-      >
-        <Grid xs={2}>{/* offset */}</Grid>
-
-        <Grid item xs={8}>
-          <div>
-            <ReactMapGL
-              mapboxApiAccessToken="pk.eyJ1IjoicHJhdGVlazk1MSIsImEiOiJjanU4bTZldzQxenpzNDN0YWFlemxmZTR1In0.39lHGz_hKdlKhM-ONRcDpg"
-              {...this.state.viewport}
-              mapStyle="mapbox://styles/mapbox/dark-v9"
-              onViewportChange={this._updateViewport}
-            >
-              {/* Here goes the markers for the trips that we have */}
-              {trips ? (
-                trips.map(this._renderTripMarker)
-              ) : (
-                <span>Network request still in process</span>
-              )}
-              {this._renderPopup}
-              <div className="fullscreen" style={fullscreenControlStyle}>
-                <FullscreenControl />
-              </div>
-              <div className="nav" style={navStyle}>
-                <NavigationControl onViewportChange={this._updateViewport} />
-              </div>
-            </ReactMapGL>
-            <br/><br/>
-            {this.state.mapRendered && (
-              <div>
-                <Link to="/visualize">See the Basic Chart</Link>
-                <Link to="/prefer">See the Main Chart</Link>
-              </div>
+      <ItemStyles>
+        <div style={{ margin: "0 auto" }}>
+          <ReactMapGL
+            mapboxApiAccessToken="pk.eyJ1IjoicHJhdGVlazk1MSIsImEiOiJjanU4bTZldzQxenpzNDN0YWFlemxmZTR1In0.39lHGz_hKdlKhM-ONRcDpg"
+            {...this.state.viewport}
+            mapStyle="mapbox://styles/mapbox/dark-v9"
+            onViewportChange={this._updateViewport}
+          >
+            {/* Here goes the markers for the trips that we have */}
+            {trips ? (
+              trips.map(this._renderTripMarker)
+            ) : (
+              <span>Network request still in process</span>
             )}
-          </div>
-        </Grid>
-        <Grid xs={2}>{/* offset */}</Grid>
-      </Grid>
+            {this._renderPopup}
+            <div className="fullscreen" style={fullscreenControlStyle}>
+              <FullscreenControl />
+            </div>
+            <div className="nav" style={navStyle}>
+              <NavigationControl onViewportChange={this._updateViewport} />
+            </div>
+          </ReactMapGL>
+          <br />
+          <br />
+          {this.state.mapRendered && (
+            <div>
+              <Link to="/visualize">See the Basic Chart</Link>
+              <Link to="/prefer">See the Main Chart</Link>
+            </div>
+          )}
+        </div>
+      </ItemStyles>
     );
   }
 }
 
-export default withStyles(styles)(RenderTrips);
+export default RenderTrips;

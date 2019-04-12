@@ -6,8 +6,7 @@ const csv = require("csv-parser");
 const HTTP_STATUS_CODES = require("http-status-codes");
 const path = require("path");
 /**
-
- * @controller
+ * @controller method to make the upload of the csv files 
  */
 exports.makeUpload = (req, res) => {
   //   console.log("Make upload now");
@@ -36,6 +35,10 @@ exports.makeUpload = (req, res) => {
     });
 };
 
+/**
+ * @controller method to get the list of the trips 
+ */
+
 exports.getTrips = (req, res) => {
   let trips = [];
   fs.createReadStream(path.join(__dirname, "../uploads/trips.csv"))
@@ -58,12 +61,16 @@ exports.getTrips = (req, res) => {
     })
     .on("end", function() {
       trips =
-        trips && trips.length > 0 ? trips.slice(1, trips.length / 10) : [];
+        trips && trips.length > 0 ? trips.slice(1, trips.length/10) : [];
       return res
         .status(HTTP_STATUS_CODES.OK)
         .json({ trips: trips, message: "Rendering all the trips" });
     });
 };
+
+/**
+ * @controller method to return the list of all the booking trends
+ */
 
 exports.bookingTrends = (req, res) => {
   // compute these on the server side with the data that we have
@@ -94,6 +101,10 @@ exports.bookingTrends = (req, res) => {
       });
     });
 };
+
+/**
+ * @controller method Controller method to return the list of all the vehicle models
+ */
 
 exports.vehicleModels = (req, res) => {
   // compute these on the server side with the data that we have

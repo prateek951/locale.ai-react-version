@@ -37,7 +37,7 @@ class MostlyPreferredVehicleModels extends PureComponent {
       toast.error(ex);
     }
   }
-
+  
   render() {
     const { models, loading } = this.state;
     return (
@@ -50,7 +50,7 @@ class MostlyPreferredVehicleModels extends PureComponent {
               <VictoryChart minDomain={{ x: 0 }}>
                 <VictoryBar
                   data={Object.keys(models)
-                    .slice(1, 10)
+                    .slice(0, 10)
                     .map(modelKey => {
                       return {
                         x: modelKey,
