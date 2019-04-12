@@ -8,7 +8,7 @@ export default class CityInfo extends PureComponent {
     return (
       <div>
         <div>{`Marker at ${displayName}`}</div>
-        <img width={240} src={info.image} alt={"Image"} />
+        <img width={240} src={info.image} alt={"yo"} />
       </div> 
     );
   }

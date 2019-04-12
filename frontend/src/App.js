@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import {
-  Redirect,
-  BrowserRouter as Router,
-  Route,
-  Switch
-} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import ReactDropzone from "./components/ReactDropzone";
 import { ToastContainer } from "react-toastify";
@@ -20,12 +15,7 @@ class App extends Component {
     isFirstRender: true
   };
 
-  checkWhetherFileUploaded = () =>
-    this.setState({ isUploaded: true, isFirstRender: false });
-
-  setIsRender = () => {
-    this.setState({ isFirstRender: false });
-  };
+  checkWhetherFileUploaded = () => this.setState({ isUploaded: true, isFirstRender: false });
 
   render() {
     const { isUploaded, isFirstRender } = this.state;
@@ -57,7 +47,6 @@ class App extends Component {
             </Switch>
           ) : (
             <Switch>
-              {this.setIsRender}
               <Redirect to="/" />
             </Switch>
           )}

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { withRouter, Link } from "react-router-dom";
 import { Cube } from "styled-loaders-react";
 import NProgress from "nprogress";
-import { MDBContainer, MDBRow, MDBCol, MDBJumbotron, MDBBtn } from "mdbreact";
+import { MDBContainer, MDBRow, MDBCol, MDBJumbotron } from "mdbreact";
 import { VictoryBar, VictoryChart } from "victory";
 import { mostPreferredVehicles } from "../../services/tripService";
 import { toast } from "react-toastify";

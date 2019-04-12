@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 import Dropzone from "react-dropzone";
 import Carousel from "./Carousel";
 import {
@@ -52,8 +52,6 @@ class ReactDropzone extends React.Component {
     };
     this.state = {
       files: [],
-      dense: false,
-      secondary: false,
       isUploaded: false,
       isUploading: false
     };
@@ -180,5 +178,10 @@ class ReactDropzone extends React.Component {
     );
   }
 }
+
+ReactDropzone.propTypes = {
+  isFirstRender: PropTypes.bool.isRequired,
+  uploadedOrNot: PropTypes.bool.isRequired
+};
 
 export default ReactDropzone;
