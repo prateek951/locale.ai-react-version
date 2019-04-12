@@ -4,7 +4,7 @@
  * https://uber.github.io/react-map-gl
  *  */
 import React, { PureComponent } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import ReactMapGL, {
   Marker,
   Popup,
@@ -13,6 +13,7 @@ import ReactMapGL, {
   FlyToInterpolator
 } from "react-map-gl";
 import NProgress from "nprogress";
+import styled from "styled-components";
 import { getTrips } from "../services/tripService";
 import { toast } from "react-toastify";
 import CityPin from "./uber-mapbox-gl-utils/city-pin";
@@ -26,6 +27,7 @@ const fullscreenControlStyle = {
   left: 0,
   padding: "10px"
 };
+
 // navstyles
 const navStyle = {
   position: "absolute",
@@ -33,7 +35,27 @@ const navStyle = {
   left: 0,
   padding: "10px"
 };
-const styles = {};
+
+//Chart Links
+const ChartLinks = styled.div`
+  font-size: 1rem;
+  margin-left: 2rem;
+  position: relative;
+  z-index: 2;
+  transform: skew(-7deg);
+  a {
+    padding: 0.5rem 1rem;
+    background: #0a12;
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
+  }
+`;
+
 class RenderTrips extends PureComponent {
   constructor(props) {
     super(props);
@@ -47,7 +69,6 @@ class RenderTrips extends PureComponent {
         zoom: 11,
         transitionInterpolator: new FlyToInterpolator()
       },
-      mapRendered: false,
       requestedPair: "from", //two values from and to
       popupInfo: null,
       trips: null
@@ -152,10 +173,12 @@ class RenderTrips extends PureComponent {
           <br />
           <br />
           {this.state.mapRendered && (
-            <div>
-              <Link to="/visualize">See the Basic Chart</Link>
-              <Link to="/prefer">See the Main Chart</Link>
-            </div>
+            <ChartLinks>
+              <div>
+                <Link to="/visualize">See the Basic Chart</Link>
+                <Link to="/prefer">See the Main Chart</Link>
+              </div>
+            </ChartLinks>
           )}
         </div>
       </ItemStyles>
@@ -163,4 +186,4 @@ class RenderTrips extends PureComponent {
   }
 }
 
-export default RenderTrips;
+export default withRouter(RenderTrips);

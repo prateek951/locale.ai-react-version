@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  Redirect,
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from "react-router-dom";
 import "./App.css";
 import ReactDropzone from "./components/ReactDropzone";
 import { ToastContainer } from "react-toastify";
@@ -10,31 +15,54 @@ import MostPreferredVehicleModels from "./components/charts/MostPreferredVehicle
 import Navigation from "./renderOnly/Navigation";
 import Footer from "./renderOnly/Footer";
 class App extends Component {
+  state = {
+    isUploaded: false,
+    isFirstRender: true
+  };
+
+  checkWhetherFileUploaded = () =>
+    this.setState({ isUploaded: true, isFirstRender: false });
+
+  setIsRender = () => {
+    this.setState({ isFirstRender: false });
+  };
+
   render() {
+    const { isUploaded, isFirstRender } = this.state;
     return (
       <div>
         <Navigation />
         <Switch>
-          <Route path="/" exact component={ReactDropzone} />
           <Route
-            path="/render-trips"
+            path="/"
             exact
             render={props => (
-              <RenderTrips {...props} />
+              <ReactDropzone
+                {...props}
+                uploadedOrNot={isUploaded}
+                isFirstRender={isFirstRender}
+                fileUploaded={this.checkWhetherFileUploaded}
+              />
             )}
           />
-          <Route
-            path="/visualize"
-            exact
-            render={props => <ChartVisualization {...props}/>}
-          />
-          <Route
-            path="/prefer"
-            exact
-            render={props => <MostPreferredVehicleModels {...props} />}
-          />
+          {isUploaded ? (
+            <Switch>
+              <Route path="/render-trips" exact component={RenderTrips} />
+              <Route path="/visualize" exact component={ChartVisualization} />
+              <Route
+                path="/prefer"
+                exact
+                component={MostPreferredVehicleModels}
+              />
+            </Switch>
+          ) : (
+            <Switch>
+              {this.setIsRender}
+              <Redirect to="/" />
+            </Switch>
+          )}
         </Switch>
-          <ToastContainer />
+        <ToastContainer />
         <Footer />
       </div>
     );

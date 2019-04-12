@@ -13,7 +13,6 @@ const Carousel = () => {
   return (
     <div>
       <MDBContainer>
-        <h4 className="mt-5 mb-2">Basic example</h4>
         <MDBCarousel
           activeItem={1}
           length={4}
@@ -26,56 +25,58 @@ const Carousel = () => {
               <MDBView>
                 <img
                   className="d-block w-100"
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg"
+                  src="https://carto.com/blog/img/posts/2016/2016-02-24-what-is-location-intelligence-and-its-benefits/LI-deepinsights.png"
                   alt="First slide"
                 />
                 <MDBMask overlay="black-light" />
               </MDBView>
               <MDBCarouselCaption>
-                <h3 className="h3-responsive">Light mask</h3>
-                <p>First text</p>
+                <h3 className="h3-responsive">
+                  What is Location Intelligence and its benefits ?{" "}
+                </h3>
               </MDBCarouselCaption>
             </MDBCarouselItem>
             <MDBCarouselItem itemId="2">
               <MDBView>
                 <img
                   className="d-block w-100"
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(99).jpg"
+                  src="https://cdn.datafloq.com/cache/blog_pictures/878x531/how-big-data-location-intelligence-changing-world.jpg"
                   alt="Second slide"
                 />
                 <MDBMask overlay="black-strong" />
               </MDBView>
               <MDBCarouselCaption>
-                <h3 className="h3-responsive">Strong mask</h3>
-                <p>Second text</p>
+                <h3 className="h3-responsive">
+                  How Big Data Location Intelligence is changing the world
+                </h3>
               </MDBCarouselCaption>
             </MDBCarouselItem>
             <MDBCarouselItem itemId="3">
               <MDBView>
                 <img
                   className="d-block w-100"
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20(17).jpg"
+                  src="https://geospatialmedia.s3.amazonaws.com/wp-content/uploads/2018/02/location-intelligence.png"
                   alt="Third slide"
                 />
                 <MDBMask overlay="black-slight" />
               </MDBView>
               <MDBCarouselCaption>
-                <h3 className="h3-responsive">Slight mask</h3>
-                <p>Third text</p>
+                <h3 className="h3-responsive">Location Intelligence</h3>
               </MDBCarouselCaption>
             </MDBCarouselItem>
             <MDBCarouselItem itemId="4">
               <MDBView>
                 <img
                   className="d-block w-100"
-                  src="https://mdbootstrap.com/img/Photos/Slides/img%20%28143%29.jpg"
-                  alt="Mattonit's item"
+                  src="https://carto.com/blog/img/posts/2018/2018-01-04-location-intelligence-end-of-gis-as-we-know-it/location-intelligence-gis-header.png"
+                  alt="Fourth Slide"
                 />
-                <MDBMask overlay="black-light" />
+                <MDBMask overlay="black-slight" />
               </MDBView>
               <MDBCarouselCaption>
-                <h3 className="h3-responsive">Sopot Beach</h3>
-                <p>Taken june 21th by @mattonit</p>
+                <h3 className="h3-responsive">
+                  Location Intelligence - End of the GIS as we know it
+                </h3>
               </MDBCarouselCaption>
             </MDBCarouselItem>
           </MDBCarouselInner>

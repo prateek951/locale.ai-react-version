@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import Carousel from "./Carousel";
@@ -9,10 +10,40 @@ import {
   MDBRow,
   MDBCol,
   MDBListGroup,
-  MDBListGroupItem
+  MDBListGroupItem,
+  MDBAlert
 } from "mdbreact";
 import { toast } from "react-toastify";
 import { uploadCSV } from "../services/tripService";
+
+// Heading Styles for the ReactDropzone Page
+
+const HeadingStyles = styled.h2`
+  font-size: 2rem;
+  font-weight: bold;
+  margin-left: 2rem;
+  position: relative;
+  z-index: 2;
+  transform: skew(-7deg);
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
+  }
+`;
+// Paragraph Styles for the ReactDropzone Page
+
+const ParagraphStyles = styled.p`
+  font-size: 20px;
+  margin-left: 2rem;
+  position: relative;
+  z-index: 2;
+  transform: skew(-2deg);
+  @media (max-width: 1300px) {
+    margin: 0;
+    text-align: center;
+  }
+`;
+
 class ReactDropzone extends React.Component {
   constructor() {
     super();
@@ -42,6 +73,7 @@ class ReactDropzone extends React.Component {
       // console.log(message);
       this.setState({ files: [], isUploaded: true, isUploading: false });
       toast.success(message);
+      this.props.fileUploaded();
       this.props.history.push("/render-trips");
     } catch (ex) {
       toast.error(ex);
@@ -49,24 +81,39 @@ class ReactDropzone extends React.Component {
     }
   };
   render() {
+    const { isFirstRender, uploadedOrNot } = this.props;
     return (
       <MDBContainer>
+        <br />
+        {!uploadedOrNot ? (
+          <MDBAlert color="danger" dismiss>
+            <strong>Trespassing not allowed ! </strong> Please care to upload a
+            CSV file. Only then we will allow access to results.
+          </MDBAlert>
+        ) : null}
+        {isFirstRender && (
+          <MDBAlert color="primary" dismiss>
+            <strong>Glad you are here!</strong>Let us upload a csv now !
+          </MDBAlert>
+        )}
         <Carousel />
         <br />
         <br />
         <MDBJumbotron>
-          <h2>
-            <span role="img" aria-labelledBy="Location App">
+          <HeadingStyles>
+            <span role="img" aria-labelledby="Location App">
               📍
             </span>{" "}
             Location Visualizer.
-          </h2>
+          </HeadingStyles>
           <hr />
+          <br />
           <h4>
             The app does what it says...Let us upload a csv to carry out our
             analysis.
           </h4>
-          <p>
+          <br />
+          <ParagraphStyles>
             {" "}
             Location intelligence (LI) is a business intelligence (BI) tool
             capability that relates geographic contexts to business data. Like
@@ -78,11 +125,16 @@ class ReactDropzone extends React.Component {
             helping companies exploit this location factor which they are unable
             to tap and utilize the fruits of what it can offer in terms of the
             growth and stability of the organisations.
-          </p>
+          </ParagraphStyles>
           <hr />
           <br />
 
-          <Dropzone marginRight={2} onDrop={this.onDrop}>
+          <Dropzone
+            multiple={false}
+            accept=".csv"
+            marginRight={2}
+            onDrop={this.onDrop}
+          >
             {({ getRootProps, getInputProps }) => (
               <section className="container">
                 <div
@@ -94,7 +146,7 @@ class ReactDropzone extends React.Component {
                   {...getRootProps({ className: "dropzone" })}
                 >
                   <input {...getInputProps()} />
-                  <p class="lead">
+                  <p className="lead">
                     Drag and drop some files here, or click to select files
                   </p>
                 </div>
@@ -121,11 +173,6 @@ class ReactDropzone extends React.Component {
                   );
                 })}
               </MDBListGroup>
-              {this.state.isUploaded ? (
-                <Link to="/render-trips">Visualize the Results</Link>
-              ) : (
-                ""
-              )}
             </MDBCol>
           </MDBRow>
         </MDBJumbotron>

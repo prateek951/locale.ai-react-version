@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Logo = styled.h1`
-  font-size: 4rem;
+  font-size: 2rem;
   margin-left: 2rem;
   position: relative;
   z-index: 2;
@@ -23,8 +23,9 @@ const Logo = styled.h1`
 // styled component styles for the navigation bar
 const StyledNavbar = styled.header`
   .bar {
-    border-bottom: 10px solid ${props => props.theme.black};
+    border-bottom: 10px solid black;
     display: grid;
+    text-align: center;
     grid-template-columns: auto 1fr;
     justify-content: space-between;
     align-items: stretch;
@@ -36,7 +37,7 @@ const StyledNavbar = styled.header`
   .sub-bar {
     display: grid;
     grid-template-columns: 1fr auto;
-    border-bottom: 1px solid ${props => props.theme.lightGrey};
+    border-bottom: 1px solid grey;
   }
 `;
 

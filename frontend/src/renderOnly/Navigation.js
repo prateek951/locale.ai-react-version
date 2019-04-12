@@ -48,9 +48,9 @@ const Navigation = props => {
     <StyledNavbar>
       <div className="bar">
         <Logo>
-          <h1>
+          <span>
             <a>Location Visualizer</a>
-          </h1>
+          </span>
         </Logo>
         <Nav />
       </div>
