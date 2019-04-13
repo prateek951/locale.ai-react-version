@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node server/app.js",
+    "server": "nodemon server/app.js",
+    "frontend": "npm run start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "license": "MIT",
   "dependencies": {
+    "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "csv-parser": "^2.2.0",
     "express": "^4.16.4",
