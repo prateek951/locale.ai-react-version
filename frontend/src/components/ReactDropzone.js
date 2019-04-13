@@ -59,7 +59,7 @@ class ReactDropzone extends React.Component {
 
   handleUpload = async event => {
     event.preventDefault();
-    if (!this.state.files[0]) {
+    if (this.state.files.length === 0) {
       toast.error("Please upload a csv file to continue");
       return;
     }
