@@ -60,7 +60,6 @@ app.get(routes.bookingTrendsRoute, apiController.bookingTrends);
 app.get(routes.mostPreferredRoute, apiController.vehicleModels);
 
 
-app.use(express.static('frontend/build'));
 
 app.use((err, req, res, next) => {
   // If the error code is for the LIMITED FILE TYPES ( ALLOW ONLY CSV)
@@ -69,19 +68,20 @@ app.use((err, req, res, next) => {
     return res
       .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
       .json({ error: "Only CSV files are allowed" });
-  }
-  // If the error code is for the LIMIT FILE SIZE
-  // Un-comment the below code to make file size limitations
-  // if (err.code === "LIMIT_FILE_SIZE") {
-  //   return res
-  //     .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
-  //     .json({ error: ` Too large. Max size that we allow is ${MAX_SIZE}` });
-  // }
-});
-
-if (process.env.NODE_ENV === "production") {
-  app.get("/*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
+    }
+    // If the error code is for the LIMIT FILE SIZE
+    // Un-comment the below code to make file size limitations
+    // if (err.code === "LIMIT_FILE_SIZE") {
+      //   return res
+      //     .status(HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY)
+      //     .json({ error: ` Too large. Max size that we allow is ${MAX_SIZE}` });
+      // }
+    });
+    
+    if (process.env.NODE_ENV === "production") {
+      app.use(express.static('frontend/build'));
+      app.get("/*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
   });
 }
 
