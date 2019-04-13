@@ -73,7 +73,10 @@ class ReactDropzone extends React.Component {
       this.setState({  files: [], isUploaded: true, isUploading: false });
       toast.success(message);
       this.props.fileUploaded();
-      this.props.history.push("/render-trips");
+      setTimeout(() => {
+      this.props.history.push("/render-trips");        
+      }, 5000);
+
     } catch (ex) {
       toast.error(ex);
       this.setState({ files: [], isUploaded: false, isUploading: false });
