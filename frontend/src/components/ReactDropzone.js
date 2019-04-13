@@ -129,7 +129,7 @@ class ReactDropzone extends React.Component {
 
           <Dropzone
             multiple={false}
-            accept=".csv"
+            accept="text/csv"
             marginRight={2}
             onDrop={this.onDrop}
           >
