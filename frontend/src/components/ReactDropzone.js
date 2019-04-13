@@ -69,7 +69,7 @@ class ReactDropzone extends React.Component {
         data: { message }
       } = await uploadCSV(this.state.files[0]);
       // console.log(message);
-      this.setState({ files: this.state.files, isUploaded: true, isUploading: false });
+      this.setState({  isUploaded: true, isUploading: false });
       toast.success(message);
       this.props.fileUploaded();
       this.props.history.push("/render-trips");
