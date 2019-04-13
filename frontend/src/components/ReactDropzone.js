@@ -59,7 +59,7 @@ class ReactDropzone extends React.Component {
 
   handleUpload = async event => {
     event.preventDefault();
-    if (this.state.files.length === 0) {
+    if (!this.state.files[0]) {
       toast.error("Please upload a csv file to continue");
       return;
     }
@@ -68,8 +68,9 @@ class ReactDropzone extends React.Component {
       const {
         data: { message }
       } = await uploadCSV(this.state.files[0]);
+      // console.log(this.state.files[0]);
       // console.log(message);
-      this.setState({  isUploaded: true, isUploading: false });
+      this.setState({  files: [], isUploaded: true, isUploading: false });
       toast.success(message);
       this.props.fileUploaded();
       this.props.history.push("/render-trips");
@@ -129,7 +130,6 @@ class ReactDropzone extends React.Component {
 
           <Dropzone
             multiple={false}
-            accept="text/csv"
             marginRight={2}
             onDrop={this.onDrop}
           >
